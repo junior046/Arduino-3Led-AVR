@@ -1,4 +1,6 @@
 ; the ultrasonic HC-SR04 AVR assembly
+; credit to Mike Shegedin for some ideas
+
 .include "/usr/local/include/atmega328p.def"
 
 .equ	GREEN_PIN, 2
@@ -22,13 +24,10 @@ Start:
 
 ; main loop
 Main_Loop:
-	cbi	PORTB, GREEN_PIN
 	sbi	PORTB, RED_PIN
 	call	System_Delay
-	cbi	PORTB, RED_PIN
 	sbi	PORTB, BLUE_PIN
 	call	System_Delay
-	cbi	PORTB, BLUE_PIN
 	sbi	PORTB, GREEN_PIN
 	call	System_Delay
     	rjmp	Main_Loop			; repeat the loop
@@ -50,12 +49,8 @@ System_Delay:
 SD_L1:
 	ldi	r18, DELAY		; inner loop
 SD_L2:
-	ldi	r19, DELAY
-SD_L3:
-	dec	r19			; use R17 as a parameter -> decrement it
-	brne	SD_L3			; if not ZERO -> keep decrementing
-	dec	r18
-	brne	SD_L2
+	dec	r18			; use R17 as a parameter -> decrement it
+	brne	SD_L2			; if not ZERO -> keep decrementing
 	dec	r17
 	brne	SD_L1
 	ret
