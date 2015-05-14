@@ -1,4 +1,5 @@
-; the ultrasonic HC-SR04 AVR assembly
+; The 3 Led light flash with AVR
+
 .include "/usr/local/include/atmega328p.def"
 
 .equ	GREEN_PIN, 2
